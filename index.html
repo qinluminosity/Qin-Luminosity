@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qin Luminosity - Client Proofing Gallery</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        header {
+            background-color: #1e1e1e;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        header h1 {
+            color: #f3f4f6;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        header p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px 100px 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-img {
+            height: 220px;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #fff;
+            word-break: break-all;
+        }
+        .card-price {
+            color: #4ade80;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        .btn.selected {
+            background-color: #22c55e;
+        }
+        
+        /* Floating Cart Bar */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1e1e1e;
+            border-top: 1px solid #333;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+        .cart-info span {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .btn-checkout {
+            background-color: #25d366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-checkout:hover {
+            background-color: #20ba5a;
+        }
+
+        /* Modal QRIS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .modal-content {
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            border: 1px solid #333;
+            margin: auto;
+        }
+        .modal-content h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .qris-box {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px auto;
+            display: inline-block;
+        }
+        .qris-box img {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+        }
+        .instruction-text {
+            background: #2a2a2a;
+            border-left: 4px solid #22c55e;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #cbd5e1;
+            margin: 15px 0;
+            text-align: left;
+            line-height: 1.4;
+        }
+        .close-modal {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Qin Luminosity</h1>
+        <p>Pilih foto ekstra pilihanmu di bawah ini</p>
+    </header>
+
+    <div class="container" id="product-list">
+        <!-- Foto 1 -->
+        <div class="card">
+            <div class="card-img">
+                <img src="Images/20260803_180330_309.jpg" alt="20260803_180330_309.jpg">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">20260803_180330_309.jpg</h3>
+                <div class="card-price">Rp 25.000</div>
+                <button class="btn" onclick="toggleSelect(this, '20260803_180330_309.jpg', 25000)">Pilih Foto Ini</button>
+            </div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="card">
+            <div class="card-img">
+                <img src="Images/20260802_050804_246.jpg" alt="20260802_050804_246.jpg">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">20260802_050804_246.jpg</h3>
+                <div class="card-price">Rp 25.000</div>
+                <button class="btn" onclick="toggleSelect(this, '20260802_050804_246.jpg', 25000)">Pilih Foto Ini</button>
+            </div>
+        </div>
+
+        <!-- Foto 3 -->
+        <div class="card">
+            <div class="card-img">
+                <img src="Images/20260730_005416_251.jpg" alt="20260730_005416_251.jpg">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">20260730_005416_251.jpg</h3>
+                <div class="card-price">Rp 25.000</div>
+                <button class="btn" onclick="toggleSelect(this, '20260730_005416_251.jpg', 25000)">Pilih Foto Ini</button>
+            </div>
+        </div>
+
+        <!-- Foto 4 -->
+        <div class="card">
+            <div class="card-img">
+                <img src="Images/20260728_174922_245.jpg" alt="20260728_174922_245.jpg">
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">20260728_174922_245.jpg</h3>
+                <div class="card-price">Rp 25.000</div>
+                <button class="btn" onclick="toggleSelect(this, '20260728_174922_245.jpg', 25000)">Pilih Foto Ini</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bar keranjang bawah -->
+    <div class="cart-bar">
+        <div class="cart-info">
+            Dipilih: <span id="count">0</span> foto | Total: <span id="total">Rp 0</span>
+        </div>
+        <button class="btn-checkout" onclick="openQrisModal()">Bayar via QRIS</button>
+    </div>
+
+    <!-- Modal QRIS -->
+    <div class="modal" id="qrisModal">
+        <div class="modal-content">
+            <h3>Selesaikan Pembayaran</h3>
+            <p style="font-size: 13px; color: #9ca3af;">Total Tagihan: <span id="modal-total" style="color: #4ade80; font-weight: bold;">Rp 0</span></p>
+            
+            <div class="qris-box">
+                <img src="link_gambar_qris_anda.png" alt="QRIS Qin Luminosity">
+            </div>
+            
+            <div class="instruction-text">
+                📱 <b>Cara Konfirmasi:</b><br>
+                1. Scan QRIS di atas untuk melakukan pembayaran.<br>
+                2. Klik tombol <b>Lanjut ke WhatsApp</b> di bawah.<br>
+                3. Kirim pesan otomatisnya, lalu <b>lampirkan screenshot bukti transfer</b> langsung di chat WhatsApp.
+            </div>
+
+            <button class="btn" style="background-color: #25d366; width: 100%; margin-bottom: 5px;" onclick="confirmWA()">Lanjut ke WhatsApp</button>
+            <button class="close-modal" onclick="closeQrisModal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedPhotos = [];
+
+        function toggleSelect(button, name, price) {
+            const index = selectedPhotos.findIndex(item => item.name === name);
+            
+            if (index > -1) {
+                selectedPhotos.splice(index, 1);
+                button.textContent = "Pilih Foto Ini";
+                button.classList.remove('selected');
+            } else {
+                selectedPhotos.push({ name, price });
+                button.textContent = "Batalkan Pilihan";
+                button.classList.add('selected');
+            }
+            
+            updateCartSummary();
+        }
+
+        function updateCartSummary() {
+            const countEl = document.getElementById('count');
+            const totalEl = document.getElementById('total');
+            
+            let total = selectedPhotos.reduce((sum, item) => sum + item.price, 0);
+            
+            countEl.textContent = selectedPhotos.length;
+            totalEl.textContent = "Rp " + total.toLocaleString('id-ID');
+        }
+
+        function openQrisModal() {
+            if (selectedPhotos.length === 0) {
+                alert("Pilih minimal 1 foto dulu, bos!");
+                return;
+            }
+            let total = selectedPhotos.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('modal-total').textContent = "Rp " + total.toLocaleString('id-ID');
+            document.getElementById('qrisModal').style.display = 'flex';
+        }
+
+        function closeQrisModal() {
+            document.getElementById('qrisModal').style.display = 'none';
+        }
+
+        function confirmWA() {
+            let text = "Halo Qin Luminosity, saya sudah melakukan pembayaran QRIS untuk foto tambahan berikut:\n\n";
+            selectedPhotos.forEach((item, i) => {
+                text += `${i + 1}. ${item.name} (Rp ${item.price.toLocaleString('id-ID')})\n`;
+            });
+            
+            let total = selectedPhotos.reduce((sum, item) => sum + item.price, 0);
+            text += `\nTotal Bayar: Rp ${total.toLocaleString('id-ID')}\n\n(Berikut saya lampirkan screenshot bukti pembayarannya ya kak 👇)`;
+            
+            let encodedText = encodeURIComponent(text);
+            let waNumber = "6282113474053"; 
+            window.open(`https://wa.me/${waNumber}?text=${encodedText}`, '_blank');
+        }
+    </script>
+
+</body>
+</html>
